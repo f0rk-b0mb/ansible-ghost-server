@@ -13,7 +13,7 @@ To use this playbook, you need to have the following installed and configured:
 
 1. Clone this repository to your local machine or control machine:
 
-git clone https://github.com/
+git clone https://github.com/f0rk-b0mb/ansible-ghost-server
 cd ghost-ansible
 
 2. Customize the variables in the `vars/main.yml` file according to your needs.
@@ -78,7 +78,7 @@ Um dieses Playbook zu verwenden, müssen Sie folgendes installiert und konfiguri
 1. Klone dieses Repository auf Ihren lokalen Rechner oder Ihre Steuerungsmaschine:
 
 
-git clone https://github.com/
+git clone https://github.com/f0rk-b0mb/ansible-ghost-server
 cd ghost-ansible
 
 
