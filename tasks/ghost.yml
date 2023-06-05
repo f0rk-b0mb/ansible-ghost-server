@@ -1,0 +1,37 @@
+---
+- name: Install Node.js
+  apt:
+    name:
+      - nodejs
+      - npm
+    state: present
+
+- name: Install Ghost-CLI
+  npm:
+    name: ghost-cli
+    global: yes
+
+- name: Create Ghost system user
+  user:
+    name: "{{ ghost_user }}"
+    system: yes
+
+- name: Create Ghost installation directory
+  file:
+    path: "{{ ghost_path }}"
+    state: directory
+    owner: "{{ ghost_user }}"
+    group: "{{ ghost_user }}"
+    mode: '0755'
+
+- name: Install Ghost
+  become_user: "{{ ghost_user }}"
+  shell: "ghost install --db mysql --dbhost localhost --dbuser {{ ghost_db_user }} --dbpass {{ ghost_db_password }} --dbname {{ ghost_db }} --url https://{{ domain }} --admin-url https://{{ domain }}/ghost --no-prompt --no-stack"
+  args:
+    chdir: "{{ ghost_path }}"
+    creates: "{{ ghost_path }}/versions"
+
+- name: Update Ghost config file
+      template:
+        src: config.production.json.j2
+        dest: /var/www/ghost/config.production.json
