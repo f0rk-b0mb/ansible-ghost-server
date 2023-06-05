@@ -1,0 +1,15 @@
+---
+- name: Setup Ghost Server
+  hosts: your_server
+  become: true
+  
+  tasks:
+    - import_tasks: tasks/common.yml
+    - import_tasks: tasks/nginx.yml
+    - import_tasks: tasks/mysql.yml
+    - import_tasks: tasks/ghost.yml
+    - import_tasks: tasks/ssl.yml
+    - import_tasks: tasks/ufw.yml
+
+  handlers:
+    - import_tasks: handlers/restart_services.yml

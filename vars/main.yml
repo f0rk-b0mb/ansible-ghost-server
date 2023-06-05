@@ -1,0 +1,21 @@
+---
+# System
+ssh_port: 2222
+ufw_rules:
+  - { rule: allow, name: 'Nginx Full' }
+  - { rule: allow, name: '{{ ssh_port }}/tcp' }
+
+# MySQL
+mysql_root_password: your_mysql_root_password
+ghost_db: ghost
+ghost_db_user: ghost_user
+ghost_db_password: ghost_password
+ghost_user: ghost
+ghost_path: /var/www/ghost
+
+# Ghost
+domain: your_domain
+email: your_email
+
+# Bashrc
+user: your_user

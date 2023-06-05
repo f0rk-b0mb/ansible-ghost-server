@@ -1,0 +1,29 @@
+---
+- name: Install MySQL Server
+  apt:
+    name:
+      - mysql-server
+    state: present
+
+- name: Start and enable MySQL
+  systemd:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: Secure MySQL installation
+  mysql_user:
+    name: root
+    password: "{{ mysql_root_password }}"
+    update_password: always
+
+- name: Create Ghost database and user
+  mysql_db:
+    name: "{{ ghost_db }}"
+    state: present
+  mysql_user:
+    name: "{{ ghost_db_user }}"
+    password: "{{ ghost_db_password }}"
+    priv: "{{ ghost_db }}.*:ALL"
+    host: localhost
+    state: present

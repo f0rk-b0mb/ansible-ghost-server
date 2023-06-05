@@ -1,0 +1,37 @@
+---
+- name: Update and upgrade system
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Install common packages
+  apt:
+    name:
+      - curl
+      - unzip
+    state: present
+
+- name: Install and configure UFW
+  import_tasks: ufw.yml
+
+- name: Change SSH port
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regex: '^#Port 22'
+    line: 'Port {{ ssh_port }}'
+  notify:
+    - Restart SSH
+
+- name: Start and enable fail2ban
+  systemd:
+    name: fail2ban
+    state: started
+    enabled: yes
+
+- name: Add bashrc
+  copy:
+    src: bashrc
+    dest: /home/your-user/.bashrc
+    owner: your-user
+    group: your-user
+    mode: '0644'

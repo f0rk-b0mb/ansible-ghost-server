@@ -1,0 +1,11 @@
+---
+- name: Install certbot
+  apt:
+    name:
+      - python3-certbot-nginx
+    state: present
+
+- name: Obtain SSL certificate
+  command: certbot --nginx -d "{{ domain }}" -d "www.{{ domain }}" -n --agree-tos --email "{{ email }}" --redirect
+  notify:
+    - Restart nginx
